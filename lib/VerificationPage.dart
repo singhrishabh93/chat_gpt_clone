@@ -1,3 +1,4 @@
+import 'package:chat_gpt_clone/ChatScreen.dart';
 import 'package:flutter/material.dart';
 
 class EmailVerificationPage extends StatelessWidget {
@@ -38,7 +39,10 @@ class EmailVerificationPage extends StatelessWidget {
             SizedBox(height: 32),
             ElevatedButton(
               onPressed: () {
-                // Implement email verification logic here
+                Navigator.pushReplacement(
+          context, 
+          MaterialPageRoute(builder: (context) => const ChatScreen())
+        );
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xFF0000F5),
