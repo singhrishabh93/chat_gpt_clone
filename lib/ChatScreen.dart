@@ -1,7 +1,18 @@
 import 'package:flutter/material.dart';
 
-class ChatPage extends StatelessWidget {
-  const ChatPage({Key? key}) : super(key: key);
+class ChatScreen extends StatelessWidget {
+  const ChatScreen({super.key});
+
+  final List<Map<String, String>> prompts = const [
+    {
+      'title': 'Design a database schema',
+      'subtitle': 'for an online merch store'
+    },
+    {'title': 'Explain airplain', 'subtitle': 'to someone 5 ye'},
+    {'title': 'Write a blog post', 'subtitle': 'about artificial intelligence'},
+    {'title': 'Debug my code', 'subtitle': 'Python error handling'},
+    {'title': 'Create a workout plan', 'subtitle': 'for weight loss'},
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -14,168 +25,150 @@ class ChatPage extends StatelessWidget {
           icon: const Icon(Icons.menu, color: Colors.black),
           onPressed: () {},
         ),
-        title: const Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+        centerTitle: true,
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              'ChatGPT 4',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-              ),
+            const Text(
+              'ChatGPT',
+              style: TextStyle(color: Colors.black),
             ),
-            Icon(Icons.chevron_right, color: Colors.black),
+            const SizedBox(width: 4),
+            const Text(
+              '4',
+              style: TextStyle(color: Colors.black, fontSize: 16),
+            ),
+            const Icon(Icons.chevron_right, color: Colors.black),
           ],
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.share, color: Colors.black),
+            icon: const Icon(Icons.edit_note, color: Colors.black),
             onPressed: () {},
           ),
         ],
-        centerTitle: true,
       ),
       body: Column(
         children: [
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: 64,
-                  height: 64,
-                  decoration: const BoxDecoration(
-                    color: Colors.black,
-                    shape: BoxShape.circle,
-                  ),
-                  child: Image.network(
-                    'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-vSDSVZQIrmahQNRCoi4FexBaeIQYwz.png',
-                    color: Colors.white,
-                  ),
+          const Expanded(
+            child: Center(
+              child: CircleAvatar(
+                radius: 30,
+                backgroundColor: Colors.black,
+                child: Icon(
+                  Icons.auto_awesome,
+                  color: Colors.white,
+                  size: 30,
                 ),
-                const SizedBox(height: 200),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: _SuggestionCard(
-                          title: 'Design a database schema',
-                          subtitle: 'for an online merch store',
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: _SuggestionCard(
-                          title: 'Explain airplanes',
-                          subtitle: 'to someone 5 y/o',
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
           Container(
             padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
-                  blurRadius: 10,
-                  offset: const Offset(0, -5),
-                ),
-              ],
-            ),
-            child: Row(
+            child: Column(
               children: [
-                IconButton(
-                  icon: const Icon(Icons.camera_alt_outlined),
-                  onPressed: () {},
-                ),
-                IconButton(
-                  icon: const Icon(Icons.photo_outlined),
-                  onPressed: () {},
-                ),
-                IconButton(
-                  icon: const Icon(Icons.folder_outlined),
-                  onPressed: () {},
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    decoration: BoxDecoration(
-                      color: Colors.grey[100],
-                      borderRadius: BorderRadius.circular(24),
-                    ),
-                    child: const TextField(
-                      decoration: InputDecoration(
-                        hintText: 'Message',
-                        hintStyle: TextStyle(color: Colors.grey),
-                        border: InputBorder.none,
-                        suffixIcon: Icon(Icons.mic, color: Colors.grey),
-                      ),
-                    ),
+                SizedBox(
+                  height: 80,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: prompts.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        width: 250,
+                        margin: EdgeInsets.only(
+                            right: index != prompts.length - 1 ? 8 : 0),
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: Colors.grey[100],
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              prompts[index]['title']!,
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              prompts[index]['subtitle']!,
+                              style: const TextStyle(
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
                   ),
                 ),
-                const SizedBox(width: 8),
-                IconButton(
-                  icon: const Icon(Icons.headphones),
-                  onPressed: () {},
-                ),
+                const SizedBox(height: 16),
+                Container(
+                  padding: const EdgeInsets.only(bottom: 15),
+                  child: Row(
+                    children: [
+                      Row(
+                        children: [
+                          IconButton(
+                            icon: const Icon(Icons.photo_camera),
+                            onPressed: () {},
+                            iconSize: 20,
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.image),
+                            onPressed: () {},
+                            iconSize: 20,
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.folder),
+                            onPressed: () {},
+                            iconSize: 20,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(24),
+                            border: Border.all(color: Colors.grey.withOpacity(0.4)),
+                          ),
+                          child: Row(
+                            children: [
+                              const Expanded(
+                                child: TextField(
+                                  decoration: InputDecoration(
+                                    hintText: 'Message',
+                                    border: InputBorder.none,
+                                    contentPadding:
+                                        EdgeInsets.symmetric(horizontal: 16),
+                                  ),
+                                ),
+                              ),
+                              IconButton(
+                                icon: const Icon(Icons.mic),
+                                onPressed: () {},
+                                iconSize: 20,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      IconButton(
+                        icon: const Icon(Icons.headphones),
+                        onPressed: () {},
+                        iconSize: 20,
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _SuggestionCard extends StatelessWidget {
-  final String title;
-  final String subtitle;
-
-  const _SuggestionCard({
-    required this.title,
-    required this.subtitle,
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-        side: BorderSide(color: Colors.grey[200]!),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              subtitle,
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey[600],
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
