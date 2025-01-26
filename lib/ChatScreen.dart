@@ -1,3 +1,4 @@
+import 'package:chat_gpt_clone/Customdrawer.dart';
 import 'package:chat_gpt_clone/Services/gemini_service.dart';
 import 'package:chat_gpt_clone/models/user_model.dart';
 import 'package:chat_gpt_clone/models/message_models.dart';
@@ -71,7 +72,7 @@ class _ChatScreenState extends State<ChatScreen> {
         children: [
           CircleAvatar(
             backgroundImage: AssetImage(message.sender.avatarUrl ?? ''),
-            radius: 20,
+            radius: 10,
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -93,51 +94,50 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
- Widget _buildGeneratingBubble() {
-  return Container(
-    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-    child: Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        CircleAvatar(
-          backgroundImage: AssetImage(_aiUser.avatarUrl ?? ''),
-          radius: 20,
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                _aiUser.name,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                  color: Colors.black,
+  Widget _buildGeneratingBubble() {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          CircleAvatar(
+            backgroundImage: AssetImage(_aiUser.avatarUrl ?? ''),
+            radius: 20,
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  _aiUser.name,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: Colors.black,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 4),
-              Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      _currentGeneratingText,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        color: Colors.black,
+                const SizedBox(height: 4),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        _currentGeneratingText,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
-    ),
-  );
-}
-
+        ],
+      ),
+    );
+  }
 
   void _scrollToBottom() {
     Future.delayed(const Duration(milliseconds: 100), () {
@@ -156,7 +156,7 @@ class _ChatScreenState extends State<ChatScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        automaticallyImplyLeading: true, // Ensures the drawer icon is displayed
         backgroundColor: Colors.white,
         elevation: 0,
         title: Row(
@@ -190,10 +190,13 @@ class _ChatScreenState extends State<ChatScreen> {
         actions: [
           IconButton(
             icon: const Icon(Icons.more_vert, color: Colors.black),
-            onPressed: () {},
+            onPressed: () {
+              // Action for more options
+            },
           ),
         ],
       ),
+      drawer: CustomDrawer(),
       body: Column(
         children: [
           Expanded(
@@ -242,11 +245,54 @@ class _ChatScreenState extends State<ChatScreen> {
               padding: const EdgeInsets.all(16.0),
               child: Row(
                 children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: IconButton(
+                      icon: const Icon(Icons.camera_alt_outlined,
+                          color: Colors.black),
+                      onPressed: () {
+                        // Add your camera action here
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 4),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: IconButton(
+                      icon:
+                          const Icon(Icons.image_outlined, color: Colors.black),
+                      onPressed: () {
+                        // Add your gallery folder action here
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 4),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: IconButton(
+                      icon: const Icon(Icons.folder_outlined,
+                          color: Colors.black),
+                      onPressed: () {
+                        // Add your gallery folder action here
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    width: 12,
+                  ),
                   Expanded(
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Colors.grey[100],
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(24),
+                        border: Border.all(
+                          color: Colors.grey,
+                        ),
                       ),
                       child: TextField(
                         controller: _messageController,
@@ -266,15 +312,16 @@ class _ChatScreenState extends State<ChatScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: 8),
                   Container(
                     decoration: BoxDecoration(
-                      color: Colors.grey[100],
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: IconButton(
-                      icon: const Icon(Icons.mic, color: Colors.black),
-                      onPressed: () {},
+                      icon: const Icon(Icons.headphones, color: Colors.black),
+                      onPressed: () {
+                        // Add your microphone action here
+                      },
                     ),
                   ),
                 ],
