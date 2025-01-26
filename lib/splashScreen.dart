@@ -55,9 +55,9 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
         child: FadeTransition(
           opacity: _fadeAnimation,
           child: Image.asset(
-            'assets/ChatGPT.png', // Replace with your logo path
-            width: 50, 
-            height: 50,
+            'assets/Chatgpt_logo.png', // Replace with your logo path
+            width: MediaQuery.sizeOf(context).width*0.8, 
+            height: 100,
           ),
         ),
       ),
