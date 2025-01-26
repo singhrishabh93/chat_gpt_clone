@@ -1,3 +1,4 @@
+import 'package:chat_gpt_clone/Customdrawer.dart';
 import 'package:flutter/material.dart';
 
 class ChatScreen extends StatelessWidget {
@@ -17,14 +18,11 @@ class ChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: CustomDrawer(),
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.menu, color: Colors.black),
-          onPressed: () {},
-        ),
         centerTitle: true,
         title: Row(
           mainAxisSize: MainAxisSize.min,
@@ -50,21 +48,15 @@ class ChatScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          const Expanded(
+          Expanded(
             child: Center(
-              child: CircleAvatar(
-                radius: 30,
-                backgroundColor: Colors.black,
-                child: Icon(
-                  Icons.auto_awesome,
-                  color: Colors.white,
-                  size: 30,
-                ),
-              ),
+              child: Container(
+                height: 40,width: 40,
+                child: Image.asset('assets/ChatGPT.png')),
             ),
           ),
-          Container(
-            padding: const EdgeInsets.all(16),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               children: [
                 SizedBox(
@@ -106,25 +98,25 @@ class ChatScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 Container(
-                  padding: const EdgeInsets.only(bottom: 15),
+                  padding: const EdgeInsets.only(bottom: 16),
                   child: Row(
                     children: [
                       Row(
                         children: [
                           IconButton(
-                            icon: const Icon(Icons.photo_camera),
+                            icon: const Icon(Icons.photo_camera_outlined, color: Colors.black),
                             onPressed: () {},
-                            iconSize: 20,
+                            iconSize: 24,
                           ),
                           IconButton(
-                            icon: const Icon(Icons.image),
+                            icon: const Icon(Icons.image_outlined, color: Colors.black),
                             onPressed: () {},
-                            iconSize: 20,
+                            iconSize: 24,
                           ),
                           IconButton(
-                            icon: const Icon(Icons.folder),
+                            icon: const Icon(Icons.folder_copy_outlined, color: Colors.black),
                             onPressed: () {},
-                            iconSize: 20,
+                            iconSize: 24,
                           ),
                         ],
                       ),
@@ -142,8 +134,7 @@ class ChatScreen extends StatelessWidget {
                                   decoration: InputDecoration(
                                     hintText: 'Message',
                                     border: InputBorder.none,
-                                    contentPadding:
-                                        EdgeInsets.symmetric(horizontal: 16),
+                                    contentPadding: EdgeInsets.symmetric(horizontal: 16),
                                   ),
                                 ),
                               ),
@@ -158,9 +149,9 @@ class ChatScreen extends StatelessWidget {
                       ),
                       const SizedBox(width: 8),
                       IconButton(
-                        icon: const Icon(Icons.headphones),
+                        icon: const Icon(Icons.headphones, color: Colors.black),
                         onPressed: () {},
-                        iconSize: 20,
+                        iconSize: 24,
                       ),
                     ],
                   ),
