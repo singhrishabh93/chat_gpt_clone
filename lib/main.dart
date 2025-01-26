@@ -1,4 +1,3 @@
-import 'package:chat_gpt_clone/loginScreen.dart';
 import 'package:chat_gpt_clone/splashScreen.dart';
 import 'package:flutter/material.dart';
 
