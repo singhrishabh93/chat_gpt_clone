@@ -1,3 +1,4 @@
+import 'package:chat_gpt_clone/ChatScreen.dart';
 import 'package:flutter/material.dart';
 
 class EmailVerificationPage extends StatelessWidget {
@@ -50,7 +51,8 @@ class EmailVerificationPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => ChatScreen()));},
                   style: ElevatedButton.styleFrom(
                     elevation: 0,
                     backgroundColor: Color(0xFFEEEEEE),
@@ -58,7 +60,7 @@ class EmailVerificationPage extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
-                     splashFactory: NoSplash.splashFactory,
+                    splashFactory: NoSplash.splashFactory,
                   ),
                   child: Text(
                     'I\'ve verified my email',
@@ -71,7 +73,9 @@ class EmailVerificationPage extends StatelessWidget {
                 ),
                 SizedBox(height: 16),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    
+                  },
                   style: ElevatedButton.styleFrom(
                     elevation: 0,
                     backgroundColor: Color(0xFFEEEEEE),
@@ -79,7 +83,7 @@ class EmailVerificationPage extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
-                     splashFactory: NoSplash.splashFactory,
+                    splashFactory: NoSplash.splashFactory,
                   ),
                   child: Text(
                     'Sign out',
