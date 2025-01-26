@@ -1,6 +1,5 @@
 import 'package:chat_gpt_clone/VerificationPage.dart';
 import 'package:flutter/material.dart';
-import 'dart:async';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -9,7 +8,7 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixin {
   final List<Map<String, dynamic>> _animationStages = [
     {
       'bgColor': Color(0xFF0000F5),
@@ -34,41 +33,45 @@ class _LoginPageState extends State<LoginPage> {
   ];
 
   int _currentStage = 0;
-  double _circlePosition = 1.0;
-  Timer? _timer;
+  late AnimationController _animationController;
+  late Animation<double> _circleAnimation;
 
   @override
   void initState() {
     super.initState();
-    _startAnimation();
-  }
-
-  void _startAnimation() {
-    _timer = Timer.periodic(Duration(seconds: 3), (timer) {
-      setState(() {
-        _currentStage = (_currentStage + 1) % _animationStages.length;
-        _circlePosition = 1.0;
-      });
-
-      _animateCircle();
+    
+    // Initialize animation controller
+    _animationController = AnimationController(
+      duration: Duration(seconds: 3),
+      vsync: this,
+    )..addListener(() {
+      setState(() {});
+    })..addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        // Change stage when animation completes
+        setState(() {
+          _currentStage = (_currentStage + 1) % _animationStages.length;
+        });
+        _animationController.reset();
+        _animationController.forward();
+      }
     });
-  }
 
-  void _animateCircle() {
-    Timer.periodic(Duration(milliseconds: 20), (timer) {
-      setState(() {
-        _circlePosition -= 0.05;
-        if (_circlePosition <= 0) {
-          timer.cancel();
-          _circlePosition = 1.0;
-        }
-      });
-    });
+    // Create smooth animation from right to left
+    _circleAnimation = Tween<double>(begin: 1.0, end: 0.0).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: Curves.easeInOut,
+      )
+    );
+
+    // Start the animation
+    _animationController.forward();
   }
 
   @override
   void dispose() {
-    _timer?.cancel();
+    _animationController.dispose();
     super.dispose();
   }
 
@@ -99,8 +102,9 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(width: 8),
                     Transform.translate(
                       offset: Offset(
-                          _circlePosition * MediaQuery.of(context).size.width,
-                          0),
+                        _circleAnimation.value * MediaQuery.of(context).size.width,
+                        0
+                      ),
                       child: CircleAvatar(
                         radius: 6,
                         backgroundColor: currentStage['circleColor'],
@@ -133,7 +137,10 @@ class _LoginPageState extends State<LoginPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.apple, color: Colors.black),
+                      Container(
+                        height: 25,
+                        width: 25,
+                        child: Image.network('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZnl0smicihjEpIXL3HAI0KWl_CjfgOaPHYg&s')),
                       SizedBox(width: 8),
                       Text(
                         'Continue with Apple',
@@ -160,7 +167,7 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Image.network(
-                        'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-TCf1dL8jOGaSzFXRPxa7pvrAKE7Hno.png',
+                        'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png',
                         height: 24,
                         width: 24,
                       ),
